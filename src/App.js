@@ -1,9 +1,14 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Navbar from './Pages/Shared/Navbar';
 
 function App() {
   return (
-    <div className="App">
-      <h2 className='text-red-500'>Manufacturer Website</h2>
+    <div className='max-w-7xl mx-auto px-12'>
+      <Navbar></Navbar>
+      <Routes>
+        <Route></Route>
+      </Routes>
     </div>
   );
 }

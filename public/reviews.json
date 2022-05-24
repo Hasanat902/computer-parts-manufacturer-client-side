@@ -1,0 +1,20 @@
+[
+    {
+        "_id": 1,
+        "name": "John Smith",
+        "ratings": 4.5,
+        "description": "This is very good manufacturer site for computer sites.Their all products is so good and long-lasting.So anyone can doing business with them."
+    },
+    {
+        "_id": 2,
+        "name": "William Jack",
+        "ratings": 5,
+        "description": "A very good site for computer parts manufacturer.Their products is also good.And the price is also reasonable."
+    },
+    {
+        "_id": 3,
+        "name": "Jacob Oram",
+        "ratings": 4.5,
+        "description": "This computer parts manufacturer company is so trust worthy.They deliver the products so quickly and their parts price is reasonable."
+    }
+]

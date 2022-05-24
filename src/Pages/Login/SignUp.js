@@ -1,42 +1,71 @@
 import React from "react";
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import auth from '../../firebase.init';
-import {
-    useSignInWithEmailAndPassword,
-    useSignInWithGoogle,
-  } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
+import auth from "../../firebase.init";
 
-
-const Login = () => {
+const SignUp = () => {
 
     const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+
 
     const {
         register,
         formState: { errors },
         handleSubmit,
       } = useForm();
-      const [signInWithEmailAndPassword, user, loading, error] =useSignInWithEmailAndPassword(auth);
+    
+      const [createUserWithEmailAndPassword, user, loading, error] =
+      useCreateUserWithEmailAndPassword(auth);
+      const [updateProfile, updating, updateError] = useUpdateProfile(auth);
 
-      let signInError;
+      let signUpError;
 
-      if (error || gError) {
-        signInError = (
-          <p className="text-red-600 mb-3">{error?.message || gError?.message}</p>
+      if (error || gError || updateError) {
+        signUpError = (
+          <p className="text-red-600 mb-3">
+            {error?.message || gError?.message || updateError?.message}
+          </p>
         );
       }
 
-      const onSubmit = (data) => {
-        signInWithEmailAndPassword(data.email, data.password);
+      const onSubmit = async (data) => {
+        await createUserWithEmailAndPassword(data.email, data.password);
+        await updateProfile({ displayName: data.name });
+        
       };
+    
+    
 
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="card w-96 bg-base-100 shadow-xl">
         <div className="card-body">
-          <h2 className="text-center text-2xl font-bold">Log In</h2>
+          <h2 className="text-center text-2xl font-bold">Sign Up</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-control w-full max-w-xs">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="name"
+                placeholder="Your Name"
+                className="input input-bordered w-full max-w-xs"
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "Name is required",
+                  },
+                })}
+              />
+              <label className="label">
+                {errors.name?.type === "required" && (
+                  <span className="label-text-alt text-red-500">
+                    {errors.name.message}
+                  </span>
+                )}
+              </label>
+            </div>
             <div className="form-control w-full max-w-xs">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -102,18 +131,18 @@ const Login = () => {
               </label>
             </div>
 
-            {signInError}
+            {signUpError}
             <input
               className="btn w-full max-w-xs text-white"
               type="submit"
-              value="Log In"
+              value="Sign Up"
             />
           </form>
           <p>
             <small>
-              New to computer parts?{" "}
-              <Link to="/signup" className="text-primary">
-                Create New Account
+              Already have an Account?{" "}
+              <Link to="/login" className="text-primary">
+                Please LogIn
               </Link>
             </small>
           </p>
@@ -130,4 +159,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

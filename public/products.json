@@ -1,0 +1,56 @@
+[
+    {
+        "_id": 1,
+        "name": "Keyboard",
+        "description": "This keyboard is so good and easy to use.This keyboard market demand is high.So you can take it.",
+        "minOrderQuantity": 500,
+        "availableQuantity": 5000,
+        "price": 300,
+        "img": "https://i.ibb.co/FBr8m4k/keyboard.jpg"
+    },
+    {
+        "_id": 2,
+        "name": "Hard Drive",
+        "description": "This hard drive is so good and Long-lasting.This hard drive is so popular.So you can take it.",
+        "minOrderQuantity": 300,
+        "availableQuantity": 4000,
+        "price": 2500,
+        "img": "https://i.ibb.co/3yrdzzQ/harddrive.jpg"
+    },
+    {
+        "_id": 3,
+        "name": "Mouse",
+        "description": "This mouse is so good and flexible to use.This mouse is so popular.So you can take it.",
+        "minOrderQuantity": 600,
+        "availableQuantity": 7000,
+        "price": 250,
+        "img": "https://i.ibb.co/7Nw0TXB/mouse.jpg"
+    },
+    {
+        "_id": 4,
+        "name": "Processor",
+        "description": "Our Processor market demand is so high and this is Long-lasting parts.And the price is also reasonable.",
+        "minOrderQuantity": 200,
+        "availableQuantity": 4000,
+        "price": 3550,
+        "img": "https://i.ibb.co/x8hQ4CC/processor.jpg"
+    },
+    {
+        "_id": 5,
+        "name": "Monitor",
+        "description": "Our manufacturer monitor display is high resolution and very sharp.This monitor is also good for eye.",
+        "minOrderQuantity": 300,
+        "availableQuantity": 5000,
+        "price": 6000,
+        "img": "https://i.ibb.co/zPTk728/monitor.jpg"
+    },
+    {
+        "_id": 6,
+        "name": "Motherboard",
+        "description": "Our manufacturer motherboard is suitable for any computer.And this parts is very Long-lasting.",
+        "minOrderQuantity": 200,
+        "availableQuantity": 6000,
+        "price": 4500,
+        "img": "https://i.ibb.co/DK0nHxb/motherboard.jpg"
+    }
+]

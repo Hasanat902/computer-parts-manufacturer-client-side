@@ -7,7 +7,7 @@ const DeleteConfirmModal = ({cancelOrder, refetch, setCancelOrder}) => {
 
     const handleDelete = id => {
     
-        fetch(`http://localhost:5000/delete/${id}`, {
+        fetch(`http://localhost:5000/order/${id}`, {
         method: "DELETE",
         })
         .then(res => res.json())

@@ -7,6 +7,7 @@ import {
   } from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loading from "../Shared/Loading";
+import useToken from "../../hooks/useToken";
 
 
 const Login = () => {
@@ -23,14 +24,15 @@ const Login = () => {
       let signInError;
       const location = useLocation();
       const navigate = useNavigate();
+      const [token] = useToken(user || gUser);
 
       let from = location.state?.from?.pathname || "/";
 
       useEffect( () => {
-          if(user || gUser){
+          if(token){
             navigate(from, { replace: true });
           }
-      }, [from, user, gUser, navigate]);
+      }, [token, from, navigate]);
 
 
       if (error || gError) {

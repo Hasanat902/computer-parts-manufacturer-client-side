@@ -17,7 +17,7 @@ const MyProfile = () => {
 
       const onSubmit = data => {
         
-       fetch(`http://localhost:5000/user/${user?.email}`, {
+       fetch(`http://localhost:5000/userDetails/${user?.email}`, {
            method: "PUT",
            headers: {
                'content-type': 'application/json'
@@ -26,7 +26,7 @@ const MyProfile = () => {
        })
        .then(res => res.json())
        .then(result => {
-           if(result.upsertedCount){
+           if(result.upsertedId){
                toast.success("Successfully saved your information");
            }
            reset();

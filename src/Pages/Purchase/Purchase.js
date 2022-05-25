@@ -46,7 +46,7 @@ const Purchase = () => {
 
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2'>
-            <div className="card card-compact w-96 bg-base-100 shadow-xl mt-12">
+            <div className="card card-compact w-96 h-fit bg-base-100 shadow-xl mt-12">
                 <figure><img src={product.img} alt="" /></figure>
                 <div className="card-body">
                     <h2 className="card-title">{product.name}</h2>
@@ -114,9 +114,20 @@ const Purchase = () => {
                 </label>
                 <input
                     type="text"
-                    placeholder="Please write your product name"
+                    placeholder='Please write your product name'
                     className="input input-bordered w-full max-w-xs"
                     {...register("product")}
+                />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Price</span>
+                </label>
+                <input
+                    type="number"
+                    placeholder='Please Enter Product price'
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("price")}
                 />
                 </div>
                 <div className="form-control w-full max-w-xs">

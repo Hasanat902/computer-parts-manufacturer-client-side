@@ -25,6 +25,11 @@ const Navbar = () => {
       </li>
       <li>
         {
+          user && <Link to="/portfolio">Dashboard</Link>
+        }
+      </li>
+      <li>
+        {
             user ? 
             <>
             <button className="btn btn-ghost" onClick={logout}>
@@ -37,6 +42,7 @@ const Navbar = () => {
             <Link to="/login">Login</Link>
         }
       </li>
+      
     </>
   );
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 
 const Purchase = () => {
@@ -15,6 +16,7 @@ const Purchase = () => {
         register,
         formState: { errors },
         handleSubmit,
+        reset
       } = useForm();
 
     useEffect( () => {
@@ -25,7 +27,20 @@ const Purchase = () => {
 
     const onSubmit = data => {
         
-        console.log(data);
+        fetch(`http://localhost:5000/order`, {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(result => {
+            if(result.insertedId){
+                toast.success("Order Completed Successfully");
+            }
+        })
+        reset();
       };
 
 
@@ -47,91 +62,103 @@ const Purchase = () => {
             </div>
             <div className="card w-96 bg-base-100 shadow-xl mt-12">
                 <div className="card-body">
+                    <h2 className='text-center text-2xl text-blue-400 font-bold'>Order Information</h2>
                 <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                value={user?.displayName}
-                className="input input-bordered w-full max-w-xs disabled"
-                {...register("name")}
-              />
-            </div>
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                value={user?.email}
-                className="input input-bordered w-full max-w-xs"
-                {...register("email")}
-              />
-            </div>
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Address</span>
-              </label>
-              <input
-                type="text"
-                placeholder='Your Address'
-                className="input input-bordered w-full max-w-xs"
-                {...register("address")}
-              />
-            </div>
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Phone Number</span>
-              </label>
-              <input
-                type="text"
-                placeholder='Your Phone Number'
-                className="input input-bordered w-full max-w-xs"
-                {...register("phone")}
-              />
-            </div>
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Quantity</span>
-              </label>
-              <input
-                type="number"
-                className="input input-bordered w-full max-w-xs"
-                {...register("quantity", {
-                  required: {
-                    value: true,
-                    message: "Quantity is required",
-                  },
-                  minLength: {
-                    value: 6,
-                    message: "Must be 6 characters or longer",
-                  },
-                })}
-              />
-              <label className="label">
-                {errors.quantity?.type === "required" && (
-                  <span className="label-text-alt text-red-500">
-                    {errors.quantity.message}
-                  </span>
-                )}
-                {errors.quantity?.type === "minLength" && (
-                  <span className="label-text-alt text-red-500">
-                    {errors.quantity.message}
-                  </span>
-                )}
-              </label>
-            </div>
-            <input
-              className="btn w-full max-w-xs text-white"
-              type="submit"
-              value="Place Order"
-            />
-          </form>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Name</span>
+                </label>
+                <input
+                    type="text"
+                    value={user?.displayName}
+                    className="input input-bordered w-full max-w-xs disabled"
+                    {...register("name")}
+                />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Email</span>
+                </label>
+                <input
+                    type="email"
+                    value={user?.email}
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("email")}
+                />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Address</span>
+                </label>
+                <input
+                    type="text"
+                    placeholder='Your Address'
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("address")}
+                />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Phone Number</span>
+                </label>
+                <input
+                    type="text"
+                    placeholder='Your Phone Number'
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("phone")}
+                />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Product Name</span>
+                </label>
+                <input
+                    type="text"
+                    placeholder="Please write your product name"
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("product")}
+                />
+                </div>
+                <div className="form-control w-full max-w-xs">
+                <label className="label">
+                    <span className="label-text">Quantity</span>
+                </label>
+                <input
+                    type="number"
+                    className="input input-bordered w-full max-w-xs"
+                    {...register("quantity", {
+                    min: {
+                        value: `${product.minOrderQuantity}`,
+                        message: `You have to purchase at least ${product.minOrderQuantity} pcs`,
+                    },
+                    max: {
+                        value: `${product.availableQuantity}`,
+                        message: `You can purchase only ${product.availableQuantity} pcs`,
+                    },
+                    })}
+                />
+                <label className="label">
+                    {errors.quantity?.type === "min" && (
+                    <span className="label-text-alt text-red-500 font-bold">
+                        {errors.quantity.message}
+                    </span>
+                    )}
+                    {errors.quantity?.type === "max" && (
+                    <span className="label-text-alt text-red-500 font-bold">
+                        {errors.quantity.message}
+                    </span>
+                    )}
+                </label>
+                </div>
+                <input
+                className="btn w-full max-w-xs text-white"
+                type="submit"
+                value="Place Order"
+                />
+            </form>
+                    </div>
                 </div>
             </div>
-        </div>
     );
 };
 

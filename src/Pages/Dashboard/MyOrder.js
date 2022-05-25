@@ -1,36 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useQuery } from "react-query";
 import auth from "../../firebase.init";
+import Loading from "../Shared/Loading";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 import OrderRow from "./OrderRow";
 
 const MyOrder = () => {
-  const [orders, setOrders] = useState([]);
+
+  const [cancelOrder, setCancelOrder] = useState(null);
 
   const [user] = useAuthState(auth);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/order?email=${user.email}`)
-      .then((res) => res.json())
-      .then((data) => setOrders(data));
-  }, []);
+  const {data: orders, isLoading, refetch} = useQuery('orders', () => fetch(`http://localhost:5000/order?email=${user.email}`)
+  .then(res => res.json()))
+
+  if(isLoading){
+      return <Loading></Loading>;
+  }
+
 
   return (
-    <div class="overflow-x-auto">
-      <table class="table w-full">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Product</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-              orders.map((order, index) => <OrderRow key={index} order={order} index={index}></OrderRow>)
-          }
-        </tbody>
-      </table>
+    <div>
+        <div class="overflow-x-auto">
+        <table class="table w-full">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Product</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {
+                orders.map((order, index) => <OrderRow key={index} order={order} index={index} refetch={refetch} setCancelOrder={setCancelOrder}></OrderRow>)
+            }
+            </tbody>
+        </table>
+        </div>
+        {
+            cancelOrder && <DeleteConfirmModal cancelOrder={cancelOrder} refetch={refetch} setCancelOrder={setCancelOrder}></DeleteConfirmModal>
+        }
     </div>
   );
 };

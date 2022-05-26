@@ -1,6 +1,6 @@
 # Computer Parts
 
-Live Site Link- 
+Live Site Link- https://manufacturer-website-cli-c6a77.web.app/
 
 ## Features and Functionality
 

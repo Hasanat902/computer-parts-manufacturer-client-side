@@ -1,67 +1,63 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const AddProduct = () => {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm();
 
-    const {
-        register,
-        formState: { errors },
-        handleSubmit,
-        reset,
-      } = useForm();
+  const imageStorageKey = "15cca39156ece9b6f8a2cc0c4e3a5f70";
 
-      const imageStorageKey = '15cca39156ece9b6f8a2cc0c4e3a5f70';
+  const onSubmit = async (data) => {
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append("image", image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        if (result.success) {
+          const img = result.data.url;
+          const product = {
+            email: data.email,
+            name: data.name,
+            description: data.description,
+            minOrderQuantity: data.minOrderQuantity,
+            availableQuantity: data.availableQuantity,
+            price: data.price,
+            img: img,
+          };
 
-      const onSubmit = async (data) => {
-        const image = data.image[0];
-        const formData = new FormData();
-        formData.append('image', image);
-        const url = `https://api.imgbb.com/1/upload?key=${imageStorageKey}`;
-        fetch(url, {
+          fetch("https://sheltered-shelf-74413.herokuapp.com/product", {
             method: "POST",
-            body: formData
-        })
-        .then(res => res.json())
-        .then(result => {
-            if(result.success){
-                const img = result.data.url;
-                const product = {
-                    email: data.email,
-                    name: data.name,
-                    description: data.description,
-                    minOrderQuantity: data.minOrderQuantity,
-                    availableQuantity: data.availableQuantity,
-                    price: data.price,
-                    img: img
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((added) => {
+              if (added.insertedId) {
+                toast.success("Product added Successfully");
+                reset();
+              } else {
+                toast.error("Failed to add the Product");
+              }
+            });
+        }
+      });
+  };
 
-                }
-
-                fetch('http://localhost:5000/product', {
-                    method: "POST",
-                    headers: {
-                        'content-type': 'application/json',
-                        'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                    },
-                    body: JSON.stringify(product)
-                })
-                .then(res => res.json())
-                .then(added => {
-                    if(added.insertedId){
-                        toast.success('Product added Successfully');
-                        reset();
-                    }
-                    else{
-                        toast.error('Failed to add the Product');
-                    }
-                })
-            }
-        })
-        
-      };
-
-    return (
-        <div className="card w-96 bg-base-100 shadow-xl">
+  return (
+    <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
         <h2 className="text-2xl font-bold text-center">
           Add Product from here
@@ -74,7 +70,7 @@ const AddProduct = () => {
             <input
               type="email"
               required
-              placeholder='Your Email'
+              placeholder="Your Email"
               className="input input-bordered w-full max-w-xs disabled"
               {...register("email")}
             />
@@ -153,7 +149,7 @@ const AddProduct = () => {
         </form>
       </div>
     </div>
-    );
+  );
 };
 
 export default AddProduct;

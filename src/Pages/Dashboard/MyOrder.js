@@ -7,47 +7,63 @@ import DeleteConfirmModal from "./DeleteConfirmModal";
 import OrderRow from "./OrderRow";
 
 const MyOrder = () => {
-
   const [cancelOrder, setCancelOrder] = useState(null);
 
   const [user] = useAuthState(auth);
 
-  const {data: orders, isLoading, refetch} = useQuery('orders', () => fetch(`http://localhost:5000/order?email=${user.email}`,{
-      method: "GET",
-      headers: {
-          'authorization': `Bearer ${localStorage.getItem('accessToken')}`
+  const {
+    data: orders,
+    isLoading,
+    refetch,
+  } = useQuery("orders", () =>
+    fetch(
+      `https://sheltered-shelf-74413.herokuapp.com/order?email=${user.email}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
       }
-  })
-  .then(res => res.json()))
+    ).then((res) => res.json())
+  );
 
-  if(isLoading){
-      return <Loading></Loading>;
+  if (isLoading) {
+    return <Loading></Loading>;
   }
-
 
   return (
     <div>
-        <div class="overflow-x-auto">
+      <div class="overflow-x-auto">
         <table class="table w-full">
-            <thead>
+          <thead>
             <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Product</th>
-                <th>Action</th>
+              <th></th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Product</th>
+              <th>Action</th>
             </tr>
-            </thead>
-            <tbody>
-            {
-                orders.map((order, index) => <OrderRow key={index} order={order} index={index} refetch={refetch} setCancelOrder={setCancelOrder}></OrderRow>)
-            }
-            </tbody>
+          </thead>
+          <tbody>
+            {orders.map((order, index) => (
+              <OrderRow
+                key={index}
+                order={order}
+                index={index}
+                refetch={refetch}
+                setCancelOrder={setCancelOrder}
+              ></OrderRow>
+            ))}
+          </tbody>
         </table>
-        </div>
-        {
-            cancelOrder && <DeleteConfirmModal cancelOrder={cancelOrder} refetch={refetch} setCancelOrder={setCancelOrder}></DeleteConfirmModal>
-        }
+      </div>
+      {cancelOrder && (
+        <DeleteConfirmModal
+          cancelOrder={cancelOrder}
+          refetch={refetch}
+          setCancelOrder={setCancelOrder}
+        ></DeleteConfirmModal>
+      )}
     </div>
   );
 };

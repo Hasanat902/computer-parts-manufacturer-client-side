@@ -5,12 +5,15 @@ const ProductDeleteModal = ({ deleteProduct, refetch, setDeleteProduct }) => {
   const { _id, name } = deleteProduct;
 
   const handleDelete = (id) => {
-    fetch(`https://sheltered-shelf-74413.herokuapp.com/product/${id}`, {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json",
-      },
-    })
+    fetch(
+      `https://computer-parts-manufacturer-server-side.onrender.com/product/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount) {

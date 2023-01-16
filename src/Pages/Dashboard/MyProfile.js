@@ -16,7 +16,7 @@ const MyProfile = () => {
 
   const onSubmit = (data) => {
     fetch(
-      `https://sheltered-shelf-74413.herokuapp.com/userDetails/${user?.email}`,
+      `https://computer-parts-manufacturer-server-side.onrender.com/userDetails/${user?.email}`,
       {
         method: "PUT",
         headers: {

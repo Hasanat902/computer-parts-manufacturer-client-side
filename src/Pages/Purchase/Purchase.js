@@ -19,19 +19,24 @@ const Purchase = () => {
   } = useForm();
 
   useEffect(() => {
-    fetch(`https://sheltered-shelf-74413.herokuapp.com/product/${productId}`)
+    fetch(
+      `https://computer-parts-manufacturer-server-side.onrender.com/product/${productId}`
+    )
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, []);
 
   const onSubmit = (data) => {
-    fetch(`https://sheltered-shelf-74413.herokuapp.com/order`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
+    fetch(
+      `https://computer-parts-manufacturer-server-side.onrender.com/order`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    )
       .then((res) => res.json())
       .then((result) => {
         if (result.insertedId) {

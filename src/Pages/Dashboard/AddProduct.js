@@ -35,14 +35,17 @@ const AddProduct = () => {
             img: img,
           };
 
-          fetch("https://sheltered-shelf-74413.herokuapp.com/product", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-            body: JSON.stringify(product),
-          })
+          fetch(
+            "https://computer-parts-manufacturer-server-side.onrender.com/product",
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+              body: JSON.stringify(product),
+            }
+          )
             .then((res) => res.json())
             .then((added) => {
               if (added.insertedId) {

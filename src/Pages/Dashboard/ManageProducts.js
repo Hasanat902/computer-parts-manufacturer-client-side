@@ -12,9 +12,9 @@ const ManageProducts = () => {
     isLoading,
     refetch,
   } = useQuery("products", () =>
-    fetch("https://sheltered-shelf-74413.herokuapp.com/product").then((res) =>
-      res.json()
-    )
+    fetch(
+      "https://computer-parts-manufacturer-server-side.onrender.com/product"
+    ).then((res) => res.json())
   );
 
   if (isLoading) {

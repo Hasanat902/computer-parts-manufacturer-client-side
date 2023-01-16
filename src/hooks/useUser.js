@@ -8,13 +8,16 @@ const useUser = (user) => {
     const email = user?.email;
 
     if (email) {
-      fetch(`https://sheltered-shelf-74413.herokuapp.com/user/${email}`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://computer-parts-manufacturer-server-side.onrender.com/user/${email}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           setUsers(data.users);

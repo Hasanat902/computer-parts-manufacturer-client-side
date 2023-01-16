@@ -7,13 +7,16 @@ const useToken = (user) => {
     const email = user?.user?.email;
     const runningUser = { email: email };
     if (email) {
-      fetch(`https://sheltered-shelf-74413.herokuapp.com/user/${email}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(runningUser),
-      })
+      fetch(
+        `https://computer-parts-manufacturer-server-side.onrender.com/user/${email}`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(runningUser),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           const accessToken = data.token;

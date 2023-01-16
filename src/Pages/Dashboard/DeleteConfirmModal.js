@@ -5,9 +5,12 @@ const DeleteConfirmModal = ({ cancelOrder, refetch, setCancelOrder }) => {
   const { product, _id } = cancelOrder;
 
   const handleDelete = (id) => {
-    fetch(`https://sheltered-shelf-74413.herokuapp.com/order/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://computer-parts-manufacturer-server-side.onrender.com/order/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.deletedCount > 0) {

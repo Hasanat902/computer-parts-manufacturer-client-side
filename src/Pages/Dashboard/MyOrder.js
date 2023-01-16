@@ -17,7 +17,7 @@ const MyOrder = () => {
     refetch,
   } = useQuery("orders", () =>
     fetch(
-      `https://sheltered-shelf-74413.herokuapp.com/order?email=${user.email}`,
+      `https://computer-parts-manufacturer-server-side.onrender.com/order?email=${user.email}`,
       {
         method: "GET",
         headers: {

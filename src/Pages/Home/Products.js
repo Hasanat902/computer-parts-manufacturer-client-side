@@ -4,6 +4,7 @@ import Product from "./Product";
 const Products = () => {
   const [products, setProducts] = useState([]);
 
+  // get products from api
   useEffect(() => {
     fetch(
       "https://computer-parts-manufacturer-server-side.onrender.com/product"

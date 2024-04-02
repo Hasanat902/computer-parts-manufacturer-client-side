@@ -4,7 +4,7 @@ const Portfolio = () => {
   return (
     <div className="bg-gray-100 rounded p-10">
       <h2 className="text-center text-3xl font-bold text-success">
-        Welcome to my portfolio page
+        Welcome to my About Us page
       </h2>
       <p className="text-xl font-bold mt-8">My name is Md Abul Hasanat</p>
       <p className="mt-5">

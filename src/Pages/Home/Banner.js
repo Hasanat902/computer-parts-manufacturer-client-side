@@ -16,7 +16,7 @@ const Banner = () => {
             <br />
             So you can doing business with us.
           </p>
-          <button className="btn btn-primary">Get a Quote</button>
+          <button className="btn btn-primary">Order Us</button>
         </div>
       </div>
     </div>
